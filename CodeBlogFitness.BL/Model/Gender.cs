@@ -7,18 +7,19 @@ using System.Threading.Tasks;
 namespace CodeBlogFitness.BL.Model
 {
     /// <summary>
-    /// Пол.
+    /// Gender.
     /// </summary>
+    [Serializable]
     public class Gender
     {
         /// <summary>
-        /// Название.
+        /// Name.
         /// </summary>
         public string Name { get; }
         /// <summary>
-        /// Сщздать новый пол
+        /// Create new gender.
         /// </summary>
-        /// <param name="name">Имя пола</param>
+        /// <param name="name">Gender name</param>
         public Gender(string name)
         {
             if (string.IsNullOrWhiteSpace(name))

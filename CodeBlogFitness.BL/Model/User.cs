@@ -3,8 +3,9 @@
 namespace CodeBlogFitness.BL.Model
 {
     /// <summary>
-    /// Пользователь.
+    /// User.
     /// </summary>
+    [Serializable]
     public class User
     {
         #region Свойства
@@ -31,13 +32,13 @@ namespace CodeBlogFitness.BL.Model
 
         #endregion Свойства
         /// <summary>
-        /// Создать Нового Пользователя
+        /// Create new user.
         /// </summary>
-        /// <param name="name">Имя.</param>
-        /// <param name="gender">Пол.</param>
-        /// <param name="birthDate">Дата рождения</param>
-        /// <param name="weight">Вес.</param>
-        /// <param name="height">Рост.</param>
+        /// <param name="name">Name.</param>
+        /// <param name="gender">Sex.</param>
+        /// <param name="birthDate">Users birthday date</param>
+        /// <param name="weight">Users weight.</param>
+        /// <param name="height">Users height.</param>
         public User(string name,
                     Gender gender,
                     DateTime birthDate,
@@ -50,7 +51,7 @@ namespace CodeBlogFitness.BL.Model
 
             }
 
-            #region Проверка условий  
+            #region Checking conditions
 
             if (gender is null)
             {
@@ -69,7 +70,7 @@ namespace CodeBlogFitness.BL.Model
                 throw new ArgumentException("Рост не может быть меньше либо равен нулю.", nameof(height));
             }
 
-            #endregion Проверка условий  
+            #endregion Checking conditions 
 
             Name = name;
             Gender = gender;
