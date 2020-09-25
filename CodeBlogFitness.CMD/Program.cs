@@ -9,24 +9,60 @@ namespace CodeBlogFitness.CMD
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to CodeBlogFitness application!");
-            Console.WriteLine("Enter user name");
-            var name = Console.ReadLine();
 
-            Console.WriteLine("Enter user gender");
-            var gender = Console.ReadLine();
+            Console.WriteLine("Enter user name: ");
+            var name = Console.ReadLine();            
 
-            Console.WriteLine("Enter birthday");
-            var birthday = DateTime.Parse(Console.ReadLine()); // TODO: try parse
+            var userController = new UserController(name);
 
-            Console.WriteLine("Enter weight");
-            var weight = Double.Parse(Console.ReadLine());
+            if (userController.IsNewUser)
+            {
+                Console.Write("Enter user gender: ");
+                var gender = Console.ReadLine();
+                var birthDate = ParseDateTime(); ;
+                var weight = ParseDouble("Weight");
+                var height = ParseDouble("Height");
+                
+                userController.SetNewUserData(gender, birthDate, weight, height);                
+            }
 
-            Console.WriteLine("Enter height");
-            var height = Double.Parse(Console.ReadLine());
+            Console.WriteLine(userController.CurrentUser);
+            Console.ReadLine();
+        }
 
-            var userController = new UserController(name, gender, birthday, weight, height);
-            userController.Save();
+        private static DateTime ParseDateTime()
+        {
+            DateTime birthDate;
+            while (true)
+            {
+                Console.Write("Enter user Date of birth (dd.mm.yyyy): ");
+                if (DateTime.TryParse(Console.ReadLine(), out birthDate))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid date of birth formats: ");
+                }
+            }
 
+            return birthDate;
+        }
+
+        private static double ParseDouble(string name)
+        {
+            while (true)
+            {
+                Console.Write($"Enter {name}: ");
+                if (double.TryParse(Console.ReadLine(), out double value))
+                {
+                    return value;
+                }
+                else
+                {
+                    Console.WriteLine($"Invalid {name} formats: ");
+                }
+            }
 
         }
     }

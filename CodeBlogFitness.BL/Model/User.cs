@@ -8,7 +8,7 @@ namespace CodeBlogFitness.BL.Model
     [Serializable]
     public class User
     {
-        #region Свойства
+        #region Properties
         /// <summary>
         /// Имя.
         /// </summary>
@@ -16,11 +16,11 @@ namespace CodeBlogFitness.BL.Model
         /// <summary>
         /// Пол.
         /// </summary>
-        public Gender Gender { get; }
+        public Gender Gender { get; set; }
         /// <summary>
         /// Дата Рожденияю
         /// </summary>
-        public DateTime BirthDate { get;  }
+        public DateTime BirthDate { get; set; }
         /// <summary>
         /// Вес.
         /// </summary>
@@ -30,12 +30,18 @@ namespace CodeBlogFitness.BL.Model
         /// </summary>
         public double Height { get; set; }
 
-        #endregion Свойства
+        //TODO: Make the correct implementation of calculating user age
+        //DateTime nowDate = DateTime.Today;
+        //int age = nowDate.Year - birthDate.Year;
+        //if (birthDate > nowDate.AddYears(-age)) age--;
+        public int Age { get { return DateTime.Now.Year - BirthDate.Year; } }
+
+        #endregion Properties
         /// <summary>
         /// Create new user.
         /// </summary>
         /// <param name="name">Name.</param>
-        /// <param name="gender">Sex.</param>
+        /// <param name="gender">Gender.</param>
         /// <param name="birthDate">Users birthday date</param>
         /// <param name="weight">Users weight.</param>
         /// <param name="height">Users height.</param>
@@ -45,29 +51,28 @@ namespace CodeBlogFitness.BL.Model
                     double weight,
                     double height)
         {
-            if(string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentNullException("Имя пользователя не может быть пустым.", nameof(name));
-
-            }
 
             #region Checking conditions
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException("Username cannot be empty.", nameof(name));
 
+            }
             if (gender is null)
             {
-                throw new ArgumentNullException("Пол не может быть пустым.", nameof(gender));
+                throw new ArgumentNullException("User gender cannot be empty.", nameof(gender));
             }
             if (birthDate <= DateTime.Parse("01.01.1900") || birthDate >= DateTime.Now)
             {
-                throw new ArgumentException("Дата рождения слишкол большая или слишком маленькая.", nameof(birthDate));
+                throw new ArgumentException("Date of birth is too large or too small.", nameof(birthDate));
             }
             if (weight <= 0)
             {
-                throw new ArgumentException("Вес не может быть меньше либо равен нулю.", nameof(weight));
+                throw new ArgumentException("The weight cannot be less than or equal to zero.", nameof(weight));
             }
             if (height <= 0)
             {
-                throw new ArgumentException("Рост не может быть меньше либо равен нулю.", nameof(height));
+                throw new ArgumentException("Growth cannot be less than or equal to zero.", nameof(height));
             }
 
             #endregion Checking conditions 
@@ -79,9 +84,19 @@ namespace CodeBlogFitness.BL.Model
             Height = height;
         }
 
+        public User(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException("Username cannot be empty.", nameof(name));
+            }
+
+            Name = name;
+        }
+
         public override string ToString()
         {
-            return Name;
+            return $"{Name} {Age}";
         }
     }
 }

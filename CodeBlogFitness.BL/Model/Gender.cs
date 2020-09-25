@@ -24,7 +24,7 @@ namespace CodeBlogFitness.BL.Model
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentNullException("Имя пола не может быть пустым", nameof(name));
+                throw new ArgumentNullException("Gender name cannot be empty.", nameof(name));
             }
             Name = name;
         }
